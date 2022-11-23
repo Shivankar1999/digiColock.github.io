@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alaram Clock Using Vanilla Javascript</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+        font-family: "Orbitron", sans-serif;
+      }
+      img {
+        max-width: 100px;
+        max-height: 100px;
+        margin-left: 20px;
+      }
+      #top {
+        text-align: center;
+        margin: 5px auto;
+        margin-bottom: 25px;
+        font-size: 30px;
+        box-shadow: 0px 0px 12px 9px rgba(0, 0, 0, 0.242);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 0px;
+        letter-spacing: 2px;
+        word-spacing: 2px;
+      }
+
+      .container {
+        /* border: 1px solid red; */
+        width: 700px;
+        margin: auto;
+        border-radius: 4px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 0px 3px 1px rgb(91, 81, 91);
+      }
+      .container #clock {
+        font-size: 65px;
+        width: 100%;
+        text-align: center;
+        margin: 8px auto;
+        /* font-family: ; */
+        background-clip: text;
+        /* border: 1px solid red; */
+        color: rgb(18, 172, 224);
+        font-weight: 700;
+      }
+      .controls {
+        margin-top: 18px;
+      }
+      .controls button.button {
+        font-weight: 400;
+        cursor: pointer;
+        margin-left: 5px;
+        padding: 12px 18px;
+        background-color: #fff;
+        border-radius: 3px;
+        /* color: #000; */
+        font-weight: 700;
+        letter-spacing: 2px;
+        font-size: 17px;
+        box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.512);
+        outline: none;
+        transition: all 0.5s ease;
+      }
+
+      .controls button.button:hover {
+        scale: 0.9;
+        background-color: black;
+        /* color: #fff; */
+        box-shadow: 3px 2px 28px 12px #fff;
+      }
+      .controls button.set-alaram {
+        color: rgb(7, 190, 251);
+      }
+      .controls button.clear-alaram {
+        color: rgb(226, 66, 13);
+      }
+
+      #Input-alaram {
+        padding: 8px 12px;
+        font-size: large;
+        box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.407);
+        cursor: pointer;
+        border-radius: 3px;
+        outline: none;
+      }
+
+      /*  */
+
+      .Alaram-add {
+        margin-top: 25px;
+        width: 650px;
+        height: 60vh;
+        border: 1px solid rgb(236, 234, 234);
+        padding: 8px;
+        /* box-shadow: 0px 0px 5px 3px #000; */
+      }
+      .Alaram-add h2 {
+        text-align: center;
+        margin: 4px 0px;
+        text-transform: uppercase;
+        border-bottom: 1px solid gray;
+        padding: 5px;
+      }
+      .Alaram-add ul {
+        width: 100%;
+        height: 100%;
+        /* border: 2px solid green; */
+        padding: 5px;
+      }
+
+      .Alaram-add ul li {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        /* border: 3px solid violet; */
+        padding: 8px 8px;
+        border-radius: 5px;
+        border: 1px solid rgb(20, 20, 20);
+        margin: 5px 0px;
+      }
+      .Alaram-add ul li span {
+        display: flex;
+        justify-self: center;
+        align-items: center;
+        text-align: center;
+        font-size: medium;
+        font-weight: 400;
+      }
+      .Alaram-add ul li span + button.button {
+        margin-left: auto;
+        padding: 8px 12px;
+        font-size: 15px;
+        box-shadow: 0px 0px 2px 1px rgba(214, 22, 22, 0.292);
+        background-color: #fff;
+        color: rgb(244, 0, 0);
+        font-weight: 700;
+        overflow: unset;
+        outline: none;
+        cursor: pointer;
+        letter-spacing: 2px;
+        border-radius: 4px;
+        transition: all 0.7s ease-in-out;
+      }
+
+      .Alaram-add ul li span + button.button:hover {
+        /* scale: 0.9; */
+        transform: scale(0.9);
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="top">
+      <h1>Digital Alaram Clock</h1>
+      <div class="clock-look-box">
+        <img
+          id="clock-look"
+          src="https://cdn-icons-png.flaticon.com/512/1584/1584942.png"
+          alt=""
+        />
+      </div>
+    </section>
+    <section class="container">
+      <div id="clock"></div>
+      <input type="datetime-local" name="alaramTime" id="Input-alaram" />
+      <div class="controls">
+        <button class="button set-alaram">Set Alaram</button>
+        <button class="button clear-alaram">Clear Alaram</button>
+      </div>
+      <div class="Alaram-add">
+        <h2>Alaram</h2>
+        <ul id="alaram-list">
+          <!-- <li><span class="setCurrentAalaram">${hour}/${minutes}/${sec} </span> <button class="remove button">Remove Aalaram</button> </li> -->
+        </ul>
+      </div>
+    </section>
+  </body>
+  <script>
+    const display = document.querySelector("#clock");
+    let audio = new Audio("Music/Clock Alarm.mp3");
+    const setalaram = document.querySelector(".set-alaram");
+    const clearalaram = document.querySelector(".clear-alaram");
+    const iputFetch = document.querySelector("#Input-alaram");
+    const UpdateUI = document.querySelector("#alaram-list");
+
+    let RemoveBtnlist = document.getElementsByClassName("remove");
+    let SelectedT;
+    // let RemoveBtnlist;
+    // Set Music
+    audio.loop = true;
+    // Set By The User....
+    let alaramTime = null;
+    //  Set Timeout alaramByuser
+    let alramTimeout = null;
+
+    function upadateTime() {
+      // Fetch time added to UI
+      const date = new Date();
+
+      const hour = formatTime(date.getHours());
+      const mintues = formatTime(date.getMinutes());
+      const seconds = formatTime(date.getSeconds());
+      let ampm = hour >= 12 ? "PM" : "AM";
+
+      display.innerText = `${hour} : ${mintues} : ${seconds}  ${ampm}`;
+    }
+
+    function formatTime(time) {
+      // To add  0 in less then 10 time
+      if (time < 10) {
+        return "0 " + time;
+      }
+      return time;
+    }
+
+    iputFetch.addEventListener("change", function setAlaramTime(time) {
+      //    Get Input Value from type date local input
+      alaramTime = this.value;
+      SelectedT = this.value;
+    });
+
+    function setAlaram() {
+      if (alaramTime) {
+        const current = new Date();
+
+        //    Fetch the Alaram time
+
+        let timeToAlaram = new Date(alaramTime);
+
+        if (timeToAlaram > current) {
+          let timeout = timeToAlaram.getTime() - current.getTime();
+          alramTimeout = setTimeout(() => {
+            audio.play();
+            console.log("Function is Called");
+          }, timeout);
+          alert("Alaram Set");
+        }
+      }
+
+      //  Add TO Ui
+      let current = new Date(SelectedT);
+      let Li = document.createElement("li");
+      Li.innerHTML = `
+    <span class="setCurrentAalaram">${current.getHours()}/${current.getMinutes()} </span> <button class="remove button">Remove Aalaram</button>
+    `;
+
+      UpdateUI.append(Li);
+
+      console.log(RemoveBtnlist);
+    }
+
+    function clearAlaram() {
+      //   Clear the  alaram also deledted fro UI
+      if (RemoveBtnlist) {
+        RemoveBtnlist[0].parentElement.remove();
+        audio.pause();
+      }
+
+      //  Clear Timeout for future
+      if (alramTimeout) {
+        clearTimeout(alramTimeout);
+      }
+    }
+    // Call Function after each 1 sec.
+    setInterval(upadateTime, 1000);
+
+    setalaram.addEventListener("click", setAlaram);
+    clearalaram.addEventListener("click", clearAlaram);
+
+    // Clear Alaram List  By User Handle Using event Deligation
+
+    UpdateUI.addEventListener("click", (e) => {
+      console.log(RemoveBtnlist);
+      if (e.target.classList.contains("remove")) {
+        e.target.parentElement.remove();
+      }
+      // for (let iterator of RemoveBtnlist) {
+      //     console.log(iterator);
+
+      // }
+    });
+  </script>
+</html>
